@@ -106,6 +106,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: v${{ env.VERSION }}
+          tag_name: v${{ env.VERSION }}
           files: |
             build/app/outputs/apk/production/release/*
             build/ios/iphoneos/app.ipa

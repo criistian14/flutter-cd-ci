@@ -61,11 +61,15 @@ jobs:
       - name: Decode keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
 
-      - name: Build APK
+      - name: Setup variables
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_PATH }}"
-          echo "${{ secrets.ANDROID_KEYSTORE_ALIAS }}"
-          flutter build apk --release --split-per-abi --flavor production -t lib/main_production.dart
+          echo "ANDROID_KEYSTORE_PATH=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" >> $GITHUB_ENV
+          echo "ANDROID_KEYSTORE_ALIAS=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" >> $GITHUB_ENV
+          echo "ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
+          echo "ANDROID_KEYSTORE_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+          
+      - name: Build APK
+        run: flutter build apk --release --split-per-abi --flavor production -t lib/main_production.dart
 
       - name: Build App Bundle
         run: flutter build appbundle --release --flavor production -t lib/main_production.dart

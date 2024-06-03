@@ -65,7 +65,7 @@ jobs:
 
       - name: Setup variables
         run: |
-          echo "ANDROID_KEYSTORE_PATH=keystore.jks >> $GITHUB_ENV
+          echo "ANDROID_KEYSTORE_PATH="keystore.jks" >> $GITHUB_ENV
           echo "ANDROID_KEYSTORE_ALIAS=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" >> $GITHUB_ENV
           echo "ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
           echo "ANDROID_KEYSTORE_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> $GITHUB_ENV

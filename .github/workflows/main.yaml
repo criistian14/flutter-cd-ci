@@ -107,6 +107,7 @@ jobs:
         with:
           name: v${{ env.VERSION }}
           tag_name: v${{ env.VERSION }}
+          body_path: CHANGELOG.md
           files: |
             build/app/outputs/apk/production/release/*
             build/ios/iphoneos/app.ipa

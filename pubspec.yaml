@@ -1,6 +1,6 @@
 name: flutter_ci_cd
 description: A Very Good Project created by Very Good CLI.
-version: 1.0.0+1
+version: 1.0.1+1
 publish_to: none
 
 environment:

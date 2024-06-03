@@ -59,7 +59,7 @@ jobs:
       - run: flutter pub get
 
       - name: Decode keystore
-        run: echo ${{ secrets.KEYSTORE_BASE64 }} | base64 --decode > android/app/keystore.jks
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
 
       - name: Build APK
         run: flutter build apk --release --split-per-abi --flavor production -t lib/main_production.dart

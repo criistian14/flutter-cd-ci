@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ci_cd/features/counter/counter.dart';
+import 'package:flutter_ci_cd/injection/injection_container.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -10,20 +11,25 @@ import '../../helpers/helpers.dart';
 class MockCounterCubit extends MockCubit<int> implements CounterCubit {}
 
 void main() {
+  late CounterCubit counterCubit;
+
+  setUp(() {
+    counterCubit = MockCounterCubit();
+    sl.allowReassignment = true;
+    sl.registerFactory(() => counterCubit);
+  });
+
   group('CounterPage', () {
     testWidgets('renders CounterView', (tester) async {
+      when(() => counterCubit.state).thenReturn(0);
+
       await tester.pumpApp(const CounterPage());
+      await tester.pumpAndSettle();
       expect(find.byType(CounterView), findsOneWidget);
     });
   });
 
   group('CounterView', () {
-    late CounterCubit counterCubit;
-
-    setUp(() {
-      counterCubit = MockCounterCubit();
-    });
-
     testWidgets('renders current count', (tester) async {
       const state = 42;
       when(() => counterCubit.state).thenReturn(state);
@@ -33,6 +39,7 @@ void main() {
           child: const CounterView(),
         ),
       );
+      await tester.pumpAndSettle();
       expect(find.text('$state'), findsOneWidget);
     });
 
@@ -46,6 +53,7 @@ void main() {
           child: const CounterView(),
         ),
       );
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.add));
       verify(() => counterCubit.increment()).called(1);
     });
@@ -60,6 +68,7 @@ void main() {
           child: const CounterView(),
         ),
       );
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.remove));
       verify(() => counterCubit.decrement()).called(1);
     });

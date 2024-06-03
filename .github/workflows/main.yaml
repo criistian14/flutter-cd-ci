@@ -65,7 +65,7 @@ jobs:
 
       - name: Setup variables
         run: |
-          echo "ANDROID_KEYSTORE_PATH=${{ secrets.ANDROID_KEYSTORE_PATH }}" >> $GITHUB_ENV
+          echo "ANDROID_KEYSTORE_PATH=keystore.jks >> $GITHUB_ENV
           echo "ANDROID_KEYSTORE_ALIAS=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" >> $GITHUB_ENV
           echo "ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
           echo "ANDROID_KEYSTORE_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
@@ -97,24 +97,24 @@ jobs:
         run: |
           git config --global user.email "criistian-14@hotmail.com"
           git config --global user.name "GitHub Actions"
-          git tag ${{ env.VERSION }}
-          git push origin ${{ env.VERSION }}
+          git tag v${{ env.VERSION }}
+          git push origin v${{ env.VERSION }}
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: Push to Releases
-        uses: actions/upload-artifact@v4
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
         with:
           name: v${{ env.VERSION }}
-          path: |
+          files: |
             build/app/outputs/apk/production/release/*
             build/ios/iphoneos/app.ipa
 
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.example.app
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.christian.flutter_ci_cd
           releaseFiles: build/app/outputs/bundle/productionRelease/app-production-release.aab
           track: closed # 'internal', 'beta', 'production'
 #          whatsNewDirectory: release_notes/

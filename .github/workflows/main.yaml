@@ -42,7 +42,9 @@ jobs:
   build_and_deploy:
     name: Build And Deploy
     runs-on: macos-latest
-#    needs: analyze_and_test
+    permissions:
+      contents: write
+    #    needs: analyze_and_test
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -98,7 +100,7 @@ jobs:
           git tag ${{ env.VERSION }}
           git push origin ${{ env.VERSION }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Push to Releases
         uses: actions/upload-artifact@v4

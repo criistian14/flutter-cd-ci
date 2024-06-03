@@ -1,0 +1,31 @@
+name: flutter_ci_cd
+description: A Very Good Project created by Very Good CLI.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: "^3.3.0"
+
+dependencies:
+  animations: ^2.0.11
+  bloc: ^8.1.3
+  flutter:
+    sdk: flutter
+  flutter_animate: ^4.5.0
+  flutter_bloc: ^8.1.4
+  flutter_gen: 5.5.0+1
+  flutter_localizations:
+    sdk: flutter
+  get_it: ^7.7.0
+  go_router: ^14.1.4
+  intl: ^0.18.1
+
+dev_dependencies:
+  bloc_test: ^9.1.6
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.3
+  very_good_analysis: ^5.1.0
+
+flutter:
+  uses-material-design: true

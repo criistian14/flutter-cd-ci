@@ -97,6 +97,8 @@ jobs:
           git config --global user.name "GitHub Actions"
           git tag ${{ env.VERSION }}
           git push origin ${{ env.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Push to Releases
         uses: actions/upload-artifact@v4
@@ -113,4 +115,4 @@ jobs:
           packageName: com.example.app
           releaseFiles: build/app/outputs/bundle/productionRelease/app-production-release.aab
           track: closed # 'internal', 'beta', 'production'
-          whatsNewDirectory: release_notes/
+#          whatsNewDirectory: release_notes/

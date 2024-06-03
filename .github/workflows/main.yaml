@@ -64,7 +64,7 @@ jobs:
       - name: Build APK
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_PATH }}"
-          echo "${{ ANDROID_KEYSTORE_ALIAS }}"
+          echo "${{ secrets.ANDROID_KEYSTORE_ALIAS }}"
           flutter build apk --release --split-per-abi --flavor production -t lib/main_production.dart
 
       - name: Build App Bundle
